@@ -1,5 +1,5 @@
 <template>
-  <input class="hminput" :value="value" :class="{success:statu,error:!statu}" @input="handleinput" @blur="handleblur">
+  <input class="hminput" :value="value" :class="{'success':statu,'error':!statu}" @input="handleinput" @blur="handleblur">
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default {
     handleinput (event) {
       console.log(event.target.value)
       let value = event.target.value
-      if (this.rules && !this.rules.test(value)) {
+      if (this.rules && this.rules.test(value)) {
         this.statu = true
       } else {
         this.statu = false
@@ -23,8 +23,11 @@ export default {
     },
     handleblur (event) {
       let value = event.target.value
-      if (this.rules.test(value)) {
-        console.log(123)
+      if (!this.rules.test(value)) {
+        this.$toast.fail({
+          message: this.msg || '输入不正确',
+          duration: 5000
+        })
       }
     }
   }

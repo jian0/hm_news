@@ -10,6 +10,7 @@ export default {
   props: ['icon'],
   methods: {
     handleinput (event) {
+      // console.log(event)
       this.$emit('input', event)
     }
   }

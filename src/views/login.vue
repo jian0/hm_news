@@ -10,7 +10,7 @@
       <div class="inputs">
           <hminput
           placeholder="请输入手机号/用户名"
-          :rules='/^(\d{5,6})|^(1\d{10})$/'
+          :rules='/^(\d{5,6})$|^(1\d{10})$/'
           msg='请输入正确的用户名'
           :value='users.username'
           @input="handleinput"
@@ -18,8 +18,8 @@
           <hminput
           placeholder="请输入密码"
           type="password"
-          :rules='/\S{3,16}/'
-          msg='请输入正确的3-16位用户名'
+          :rules='/^\S{3,16}$/'
+          msg='请输入正确的3-16位密码'
           v-model='users.password'
           ></hminput>
         <!-- <input placeholder="密码" class="input" type="password" /> -->
@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     login (data) {
-      console.log(123)
+      console.log(this.users.username)
     },
     handleinput (data) {
       this.users.username = data
