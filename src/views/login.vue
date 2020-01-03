@@ -8,20 +8,55 @@
         <span class="iconfont iconnew"></span>
       </div>
       <div class="inputs">
-        <input data-v-744880be placeholder="请输入手机号" class="input" />
-        <input data-v-744880be placeholder="密码" class="input" type="password" />
+          <hminput
+          placeholder="请输入手机号/用户名"
+          :rules='/^(\d{5,6})|^(1\d{10})$/'
+          msg='请输入正确的用户名'
+          :value='users.username'
+          @input="handleinput"
+          ></hminput>
+          <hminput
+          placeholder="请输入密码"
+          type="password"
+          :rules='/\S{3,16}/'
+          msg='请输入正确的3-16位用户名'
+          v-model='users.password'
+          ></hminput>
+        <!-- <input placeholder="密码" class="input" type="password" /> -->
       </div>
       <p class="tips">
         没有账号？
         <a href="#/register" class>去注册</a>
       </p>
-      <div data-v-4bc01e24 class="button">登录按钮</div>
+      <hmbutton @input='login'>登录</hmbutton>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import hmbutton from '@/components/hmbutton.vue'
+import hminput from '@/components/hminput.vue'
+export default {
+  data () {
+    return {
+      users: {
+        username: '10086',
+        password: '123'
+      }
+    }
+  },
+  components: {
+    hmbutton, hminput
+  },
+  methods: {
+    login (data) {
+      console.log(123)
+    },
+    handleinput (data) {
+      this.users.username = data
+    }
+  }
+}
 </script>
 
 <style lang='less' scoped>
