@@ -3,7 +3,10 @@ import VueRouter from 'vue-router'
 
 import Login from '@/views/login.vue'
 import Usercenter from '@/views/usercenter.vue'
+import Edituser from '@/views/edituser.vue'
+
 Vue.use(VueRouter)
+
 let router = new VueRouter({
   routes: [
     {
@@ -15,6 +18,11 @@ let router = new VueRouter({
       name: 'Usercenter',
       path: '/usercenter/:id',
       component: Usercenter
+    },
+    {
+      name: 'Edituser',
+      path: '/edituser/:id',
+      component: Edituser
     }
   ]
 })
