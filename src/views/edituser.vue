@@ -8,8 +8,8 @@
         <van-uploader :after-read="afterRead" />
     </div>
     <hmcell left='昵称' :right='userdata.nickname'></hmcell>
-    <hmcell left='密码' :right='userdata.password'></hmcell>
-    <hmcell left='性别' :right='userdata.gender'></hmcell>
+    <hmcell left='密码' :right="show?userdata.password:'*******'"></hmcell>
+    <hmcell left='性别' :right="userdata.gender?'男':'女'"></hmcell>
     <!-- <van-field v-model="value" required label="昵称" placeholder="请输入昵称" /> -->
   </div>
 </template>
@@ -18,10 +18,11 @@
 import hmheader from '@/components/hmheader.vue'
 import hmcell from '@/components/hmcell.vue'
 import { uploadfile } from '@/apis/upload.js'
-import { getUserById } from '@/apis/user.js'
+import { getUserById, edituserinfo } from '@/apis/user.js'
 export default {
   data () {
     return {
+      show: false,
       userdata: {}
     }
   },
@@ -30,8 +31,7 @@ export default {
   },
   async mounted () {
     let res = await getUserById(this.$route.params.id)
-    console.log(res)
-
+    // console.log(res)
     if (res.data.message === '获取成功') {
       this.userdata = res.data.data
       this.userdata.head_img = 'http://127.0.0.1:3000' + this.userdata.head_img
@@ -42,9 +42,16 @@ export default {
   methods: {
     async afterRead (file) {
       // 此时可以自行将文件上传至服务器
-      let res = await uploadfile(file.file)
-      console.log(res)
-
+      let formdata = new FormData()
+      formdata.append('file', file.file)
+      let res = await uploadfile(formdata)
+      if (res.data.message === '文件上传成功') {
+        //   先实现预览效果
+        this.userdata.head_img = 'http://127.0.0.1:3000' + res.data.data.url
+        // 更新数据库
+        edituserinfo(this.userdata.id, { head_img: res.data.data.url })
+      }
+      //   console.log(res)
       console.log(file)
     }
   }

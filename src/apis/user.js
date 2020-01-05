@@ -17,3 +17,11 @@ export const getUserById = (id) => {
     // headers: { 'Authorization': localStorage.getItem('hm_news_token') }
   })
 }
+
+export const edituserinfo = (id, data) => {
+  return axios({
+    method: 'post',
+    url: `/user_update/${id}`,
+    data
+  })
+}
