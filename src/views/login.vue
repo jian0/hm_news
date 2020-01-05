@@ -36,6 +36,7 @@
 <script>
 import hmbutton from '@/components/hmbutton.vue'
 import hminput from '@/components/hminput.vue'
+import { login } from '@/apis/user.js'
 export default {
   data () {
     return {
@@ -49,8 +50,27 @@ export default {
     hmbutton, hminput
   },
   methods: {
-    login (data) {
-      console.log(this.users.username)
+    async login () {
+      // console.log(this.users.username)
+      let res = await login(this.users)
+      if (res.data.message === '登录成功') {
+        // console.log(res)
+        // 存储token值到本地
+        localStorage.setItem('hm_news_token', res.data.data.token)
+        // 存储用户个人信息到本地,并转为字符串
+        localStorage.setItem('userinfo', JSON.stringify(res.data.data.user))
+        // 跳转到用户中心页面
+        this.$router.push({ path: `/usercenter/${res.data.data.user.id}` })
+      } else {
+        this.$toast.fail('账号或者密码输入有误')
+      }
+      // .then(res => {
+      //   console.log(res)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      // console.log(this.users)
     },
     handleinput (data) {
       this.users.username = data
