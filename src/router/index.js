@@ -5,6 +5,7 @@ import Login from '@/views/login.vue'
 import Usercenter from '@/views/usercenter.vue'
 import Edituser from '@/views/edituser.vue'
 import Register from '@/views/register.vue'
+import Index from '@/views/index.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ let router = new VueRouter({
       name: 'Register',
       path: '/register',
       component: Register
+    },
+    {
+      name: 'Index',
+      path: '/',
+      component: Index
     }
   ]
 })
