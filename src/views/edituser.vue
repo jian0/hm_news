@@ -70,7 +70,7 @@ export default {
     //   console.log(this.$refs.input)
     // 获取组件输入框里面的数据
       let data = this.$refs.nick.$refs.input.value
-      // console.log(data)
+      console.log(data)
       // 预览修改后的数据
       this.userdata.nickname = data
       // 发请求更新数据库的数据
@@ -83,18 +83,38 @@ export default {
       }
     },
     async handlepass () {
+    },
+    async beforeClose (action, done) {
+      // console.log(action)
+      // console.log(done)
+      if (action === 'confirm') {
+        let oldpass = this.$refs.oldpass.$refs.input.value
+        let newpass = this.$refs.newpass.$refs.input.value
+        // console.log(oldpass)
+        if (oldpass !== this.userdata.password) {
+          this.$toast.fail('旧密码输入错误')
+          done(false)
+        } else if (oldpass === newpass) {
+          this.$toast.fail('旧密码和新密码不能相同')
+          done(false)
+        } else if (newpass.trim().length === 0) {
+          this.$toast.fail('新密码不能为空')
+          done(false)
+        } else {
+          let res2 = await edituserinfo(this.userdata.id, { password: newpass })
+          this.userdata.password = newpass
+          console.log(res2)
+          if (res2.data.message === '修改成功') {
+            this.$toast.success('修改成功')
+            done()
+          } else {
+            this.$toast.fail('修改失败')
+          }
+        }
+      } else {
+        done()
+      }
     }
-    // ,
-    // beforeClose (action, done) {
-    //   console.log(action)
-    //   console.log(done)
-    //   if (action === 'confirm') {
-    //     let oldpass = this.$refs.oldpass.$refs.input.value
-    //     console.log(oldpass)
-
-    //     done(false)
-    //   }
-    // }
   }
 }
 </script>
