@@ -1,7 +1,7 @@
 <template>
-  <div class="hmcell">
+  <div class="hmcell" @click="handlename">
       <div class="left">{{left}}</div>
-      <div class="right">{{right}}<span class="iconfont iconjiantou1"></span>
+      <div class="right">{{type==='password'?'********':right}}<span class="iconfont iconjiantou1" ></span>
 </div>
 
   </div>
@@ -9,7 +9,12 @@
 
 <script>
 export default {
-  props: ['left', 'right']
+  props: ['left', 'right', 'type'],
+  methods: {
+    handlename (event) {
+      this.$emit('click', event)
+    }
+  }
 }
 </script>
 
