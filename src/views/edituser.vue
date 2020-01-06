@@ -8,16 +8,19 @@
       <van-uploader :after-read="afterRead" />
     </div>
     <hmcell left="昵称" :right="userdata.nickname" @click="shownick=!shownick"></hmcell>
-    <van-dialog v-model="shownick" title="标题" show-cancel-button @confirm='handlename'>
+    <van-dialog v-model="shownick" title="修改昵称" show-cancel-button @confirm='handlename'>
         <van-field ref="nick" :value="userdata.nickname" required label="昵称" placeholder="请输入昵称" />
     </van-dialog>
     <hmcell left="密码" :right="userdata.password" type='password' @click="showpass=!showpass"></hmcell>
-    <van-dialog v-model="showpass" title="标题" show-cancel-button @confirm='handlepass' :beforeClose='beforeClose'>
+    <van-dialog v-model="showpass" title="修改密码" show-cancel-button @confirm='handlepass' :beforeClose='beforeClose'>
         <van-field ref="oldpass" required label="旧密码" placeholder="请输入旧密码" />
         <van-field ref="newpass" required label="新密码" placeholder="请输入新密码" />
     </van-dialog>
 
-    <hmcell left="性别" :right="userdata.gender?'男':'女'"></hmcell>
+    <hmcell left="性别" :right="userdata.gender?'男':'女'" @click="showgender=!showgender"></hmcell>
+    <van-dialog v-model="showgender" title="修改性别" show-cancel-button @confirm='handlegender'>
+        <van-picker :columns="['女','男']"  :default-index="0" @change="onChange" />
+    </van-dialog>
   </div>
 </template>
 
@@ -31,7 +34,9 @@ export default {
     return {
       shownick: false,
       showpass: false,
-      userdata: {}
+      showgender: false,
+      userdata: {},
+      gender: ''
     }
   },
   components: {
@@ -100,6 +105,9 @@ export default {
         } else if (newpass.trim().length === 0) {
           this.$toast.fail('新密码不能为空')
           done(false)
+        } else if (!/^\S{3,16}$/.test(newpass)) {
+          this.$toast.fail('请输入正确的3-16位新密码')
+          done(false)
         } else {
           let res2 = await edituserinfo(this.userdata.id, { password: newpass })
           this.userdata.password = newpass
@@ -114,6 +122,18 @@ export default {
       } else {
         done()
       }
+    },
+    async handlegender () {
+      let res3 = await edituserinfo(this.userdata.id, { gender: this.gender })
+      console.log(res3)
+      if (res3.data.message === '修改成功') {
+        this.userdata.gender = this.gender
+        this.$toast.success('修改成功')
+      }
+    },
+    onChange (picker, value, index) {
+      this.gender = index
+      this.$toast(`当前值：${value}, 当前索引：${index}`)
     }
   }
 }
