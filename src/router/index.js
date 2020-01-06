@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Login from '@/views/login.vue'
 import Usercenter from '@/views/usercenter.vue'
 import Edituser from '@/views/edituser.vue'
+import Register from '@/views/register.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ let router = new VueRouter({
       name: 'Edituser',
       path: '/edituser/:id',
       component: Edituser
+    },
+    {
+      name: 'Register',
+      path: '/register',
+      component: Register
     }
   ]
 })

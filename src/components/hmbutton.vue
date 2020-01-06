@@ -11,7 +11,7 @@ export default {
   methods: {
     handleinput (event) {
       // console.log(event)
-      this.$emit('input', event)
+      this.$emit('click', event)
     }
   }
 }

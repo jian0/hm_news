@@ -12,8 +12,7 @@
           placeholder="请输入手机号/用户名"
           :rules='/^(\d{5,6})$|^(1\d{10})$/'
           msg='请输入正确的用户名'
-          :value='users.username'
-          @input="handleinput"
+          v-model='users.username'
           ></hminput>
           <hminput
           placeholder="请输入密码"
@@ -22,13 +21,19 @@
           msg='请输入正确的3-16位密码'
           v-model='users.password'
           ></hminput>
+          <hminput
+          placeholder="请输入用户名"
+          :rules='/[\u4e00-\u9fa5]/gm'
+          msg='请输入正确的3-16位用户名'
+          v-model='users.nickname'
+          ></hminput>
         <!-- <input placeholder="密码" class="input" type="password" /> -->
       </div>
       <p class="tips">
-        没有账号？
-        <a href="#/register" class>去注册</a>
+        已有账号？
+        <a href="#/login" class>去登录</a>
       </p>
-      <hmbutton @click='login'>登录</hmbutton>
+      <hmbutton @click='handleregister'>注册</hmbutton>
     </div>
   </div>
 </template>
@@ -36,13 +41,14 @@
 <script>
 import hmbutton from '@/components/hmbutton.vue'
 import hminput from '@/components/hminput.vue'
-import { login } from '@/apis/user.js'
+import { register } from '@/apis/user.js'
 export default {
   data () {
     return {
       users: {
-        username: '12345',
-        password: '123'
+        username: '',
+        password: '',
+        nickname: ''
       }
     }
   },
@@ -50,30 +56,15 @@ export default {
     hmbutton, hminput
   },
   methods: {
-    async login () {
-      // console.log(this.users.username)
-      let res = await login(this.users)
-      if (res.data.message === '登录成功') {
-        // console.log(res)
-        // 存储token值到本地
-        localStorage.setItem('hm_news_token', res.data.data.token)
-        // 存储用户个人信息到本地,并转为字符串
-        localStorage.setItem('userinfo', JSON.stringify(res.data.data.user))
-        // 跳转到用户中心页面
-        this.$router.push({ path: `/usercenter/${res.data.data.user.id}` })
+    async handleregister () {
+      let res = await register(this.users)
+      console.log(res)
+      if (res.data.message === '注册成功') {
+        this.$toast.success('注册成功')
+        this.$router.push({ name: 'Login' })
       } else {
-        this.$toast.fail('账号或者密码输入有误')
+        this.$toast.fail(res.data.message)
       }
-      // .then(res => {
-      //   console.log(res)
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
-      // console.log(this.users)
-    },
-    handleinput (data) {
-      this.users.username = data
     }
   }
 }

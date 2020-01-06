@@ -1,17 +1,22 @@
 <template>
   <div class="box">
     <hmheader title="编辑资料">
-      <span class="iconfont iconjiantou2" slot="left"></span>
+      <span class="iconfont iconjiantou2" slot="left" @click="$router.back()"></span>
     </hmheader>
     <div class="user_img">
       <img :src="userdata.head_img" alt />
       <van-uploader :after-read="afterRead" />
     </div>
-    <hmcell left="昵称" :right="userdata.nickname" @click="show=!show"></hmcell>
-    <van-dialog v-model="show" title="标题" show-cancel-button @confirm='handlename'>
+    <hmcell left="昵称" :right="userdata.nickname" @click="shownick=!shownick"></hmcell>
+    <van-dialog v-model="shownick" title="标题" show-cancel-button @confirm='handlename'>
         <van-field ref="nick" :value="userdata.nickname" required label="昵称" placeholder="请输入昵称" />
     </van-dialog>
-    <hmcell left="密码" :right="userdata.password" type='password'></hmcell>
+    <hmcell left="密码" :right="userdata.password" type='password' @click="showpass=!showpass"></hmcell>
+    <van-dialog v-model="showpass" title="标题" show-cancel-button @confirm='handlepass' :beforeClose='beforeClose'>
+        <van-field ref="oldpass" required label="旧密码" placeholder="请输入旧密码" />
+        <van-field ref="newpass" required label="新密码" placeholder="请输入新密码" />
+    </van-dialog>
+
     <hmcell left="性别" :right="userdata.gender?'男':'女'"></hmcell>
   </div>
 </template>
@@ -24,7 +29,8 @@ import { getUserById, edituserinfo } from '@/apis/user.js'
 export default {
   data () {
     return {
-      show: false,
+      shownick: false,
+      showpass: false,
       userdata: {}
     }
   },
@@ -75,7 +81,20 @@ export default {
       } else {
         this.$toast.fail('用户名修改失败')
       }
+    },
+    async handlepass () {
     }
+    // ,
+    // beforeClose (action, done) {
+    //   console.log(action)
+    //   console.log(done)
+    //   if (action === 'confirm') {
+    //     let oldpass = this.$refs.oldpass.$refs.input.value
+    //     console.log(oldpass)
+
+    //     done(false)
+    //   }
+    // }
   }
 }
 </script>

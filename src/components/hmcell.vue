@@ -22,9 +22,7 @@ export default {
 .hmcell{
     padding: 20px 10px;
     display: flex;
+    font-size: 20px;
     justify-content: space-between;
-    > .right{
-        font-size: 14px
-    }
 }
 </style>
