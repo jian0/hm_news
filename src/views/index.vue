@@ -15,7 +15,22 @@
     <div class="nav">
       <van-tabs v-model="active" sticky swipeable>
         <van-tab :title="cate.name" v-for="cate in castList" :key='cate.id'>
-            <hmarticleblock v-for="item in cate.postList" :key="item.id" :post='item'></hmarticleblock>
+          <!-- 上拉加载 -->
+            <van-list
+                v-model="cate.loading"
+                :finished="cate.finished"
+                finished-text="没有更多了"
+                @load="onLoad"
+                :offset= "10"
+                :immediate-check='false'>
+            <!-- 下拉刷新 -->
+            <van-pull-refresh
+                  v-model="cate.isLoading"
+                  success-text="刷新成功"
+                  @refresh="onRefresh">
+                <hmarticleblock v-for="item in cate.postList" :key="item.id" :post='item'></hmarticleblock>
+            </van-pull-refresh>
+            </van-list>
         </van-tab>
       </van-tabs>
     </div>
@@ -59,15 +74,38 @@ export default {
     this.castList = this.castList.map(arr => {
       return {
         ...arr,
-        pageIndex: 1,
-        pageSize: 20,
-        postList: []
+        pageIndex: 1, // 当前所在页
+        pageSize: 5, // 当前栏目显示的条数
+        postList: [], // 当前栏目的新闻列表数据
+        loading: false, // 当前栏目的加载状态
+        finished: false, // 当前栏目是否加载完毕
+        isLoading: false // 当前栏目是否在刷新
+
       }
     })
     // console.log(this.castList)
     this.init()
   },
   methods: {
+    //   上拉加载
+    onLoad () {
+      // this.castList[this.active].finished = true
+      if (this.castList[this.active].isLoading === false) {
+        this.castList[this.active].pageIndex++
+        setTimeout(() => {
+          this.init()
+        }, 1000)
+      }
+    },
+    // 下拉刷新
+    onRefresh () {
+      this.castList[this.active].pageIndex = 1
+      this.castList[this.active].postList.length = 0
+      setTimeout(() => {
+        this.init()
+      }, 1000)
+      this.castList[this.active].finished = false
+    },
     //   获取新闻数据
     async init () {
       let id = this.castList[this.active].id
@@ -76,9 +114,20 @@ export default {
         pageSize: this.castList[this.active].pageSize,
         category: id
       })
-      //   console.log(id)
+      if (this.castList[this.active].loading) {
+        this.castList[this.active].loading = false
+      }
+      if (this.castList[this.active].isLoading) {
+        this.castList[this.active].isLoading = false
+      }
+      // 当加载的数据条数小于每页展示的数据条数时
+      if (res.data.data.length < this.castList[this.active].pageSize) {
+        // 结束加载
+        this.castList[this.active].finished = true
+      }
+      // console.log(id)
       console.log(res)
-      this.castList[this.active].postList = res.data.data
+      this.castList[this.active].postList.push(...res.data.data)
     }
   }
 }
