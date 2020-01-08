@@ -60,7 +60,7 @@ export default {
       return {
         ...arr,
         pageIndex: 1,
-        pageSize: 5,
+        pageSize: 20,
         postList: []
       }
     })
@@ -77,7 +77,7 @@ export default {
         category: id
       })
       //   console.log(id)
-      //   console.log(res)
+      console.log(res)
       this.castList[this.active].postList = res.data.data
     }
   }
