@@ -12,6 +12,7 @@
         </div>
         <span>回复</span>
       </div>
+      <commentitem v-if="item.parent" :parent='item.parent'></commentitem>
       <div class="text">{{item.content}}</div>
     </div>
   </div>
@@ -20,6 +21,7 @@
 <script>
 import myheader from '@/components/hmheader.vue'
 import { getCommentList } from '@/apis/article.js'
+import commentitem from '@/components/commentitem.vue'
 export default {
   data () {
     return {
@@ -27,7 +29,7 @@ export default {
     }
   },
   components: {
-    myheader
+    myheader, commentitem
   },
   async mounted () {
     let res = await getCommentList(this.$route.params.id)
