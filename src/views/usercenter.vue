@@ -8,7 +8,7 @@
           <div class="name">
             <span class="iconfont iconxingbienan"></span>{{userdata.nickname}}
           </div>
-          <div class="time">{{userdata.create_date}}</div>
+          <div class="time">{{userdata.create_date | datefilter}}</div>
         </div>
         <span class="iconfont iconjiantou1"></span>
       </div>
@@ -25,9 +25,13 @@
 import { getUserById } from '@/apis/user.js'
 import hmcell from '@/components/hmcell.vue'
 import hmbutton from '@/components/hmbutton.vue'
+import { datefilter } from '@/filters/datefilter.js'
 export default {
   components: {
     hmcell, hmbutton
+  },
+  filters: {
+    datefilter
   },
   data () {
     return {

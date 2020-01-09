@@ -11,7 +11,7 @@
       <div class="title">{{article.title}}</div>
       <div class="desc">
         <span>{{article.user.nickname}}</span> &nbsp;&nbsp;
-        <span>{{article.create_date}}</span>
+        <span>{{article.create_date | datefilter}}</span>
       </div>
       <div class="content" v-html="article.content" v-if="article.type === 1">
       </div>
@@ -49,9 +49,13 @@
 import { getarticledetail, postlike } from '@/apis/article.js'
 import { followsuser, unfollowsuser } from '@/apis/user.js'
 import hmfooter from '@/components/hmfooter.vue'
+import { datefilter } from '@/filters/datefilter.js'
 export default {
   components: {
     hmfooter
+  },
+  filters: {
+    datefilter
   },
   data () {
     return {
