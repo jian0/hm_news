@@ -15,7 +15,7 @@
       <commentitem v-if="item.parent" :parent='item.parent'></commentitem>
       <div class="text">{{item.content}}</div>
     </div>
-    <hmfooter :post='footer'></hmfooter>
+    <hmfooter :post='footer' @refresh='refresh'></hmfooter>
   </div>
 </template>
 
@@ -36,16 +36,27 @@ export default {
     myheader, commentitem, hmfooter
   },
   async mounted () {
-    let res = await getCommentList(this.$route.params.id)
-    // console.log(res)
-    this.commList = res.data.data.length > 0 ? res.data.data : this.commList
-    this.commList.map(value => {
-      value.user.head_img = 'http://127.0.0.1:3000' + value.user.head_img
-      return value
-    })
+    this.init()
     let res1 = await getarticledetail(this.$route.params.id)
     // console.log(res1)
     this.footer = res1.data.data
+  },
+  methods: {
+    // 获取静态评论资源
+    async init () {
+      let res = await getCommentList(this.$route.params.id)
+      // console.log(res)
+      this.commList = res.data.data.length > 0 ? res.data.data : this.commList
+      this.commList.map(value => {
+        value.user.head_img = 'http://127.0.0.1:3000' + value.user.head_img
+        return value
+      })
+    },
+    refresh () {
+      this.init()
+      // 滚到顶部
+      window.scrollTo(0, 0)
+    }
   }
 }
 </script>

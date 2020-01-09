@@ -12,15 +12,15 @@
     <div class="inputcomment" v-show='isFocus'>
         <textarea  ref='commtext' rows="5" @blur='isFocus = false'></textarea>
         <div>
-            <span>发送</span>
-            <span>取消</span>
+            <span @click="sendcontent">发送</span>
+            <span @click='isFocus=false'>取消</span>
         </div>
     </div>
   </div>
 </template>
 
 <script>
-import { starArticle } from '@/apis/article.js'
+import { starArticle, sendContent } from '@/apis/article.js'
 export default {
   props: ['post'],
   data () {
@@ -29,11 +29,28 @@ export default {
     }
   },
   methods: {
+    // 发表评论
+    async sendcontent () {
+      console.log(this.post.id)
+
+      let res = await sendContent(this.post.id, { content: this.$refs.commtext.value })
+      console.log(res)
+      if (res.data.message === '评论发布成功') {
+      // 发表成功后关闭输入框
+        this.isFocus = false
+        // 弹窗
+        this.$toast.success(res.data.message)
+        // 清空文本域的内容
+        this.$refs.commtext.value = ''
+        this.$emit('refresh')
+      }
+    },
     //   获取焦点时触发
     handlerFocus () {
       this.isFocus = !this.isFocus
       this.$refs.commtext.focus()
     },
+    // 收藏文章
     async handlestar (id) {
       let res = await starArticle(id)
       //   console.log(res)
