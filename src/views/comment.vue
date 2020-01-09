@@ -38,6 +38,7 @@ export default {
   },
   async mounted () {
     this.init()
+    // 获取评论内容信息
     let res1 = await getarticledetail(this.$route.params.id)
     // console.log(res1)
     this.footer = res1.data.data
@@ -53,6 +54,7 @@ export default {
         return value
       })
     },
+    // 评论成功后刷新页面
     refresh () {
       this.init()
       // 滚到顶部

@@ -1,5 +1,6 @@
 import axios from '@/utils/myaxios.js'
 
+// 获取文章列表
 export const getarticlelist = (params) => {
   return axios({
     url: '/post',
@@ -7,18 +8,21 @@ export const getarticlelist = (params) => {
   })
 }
 
+// 获取评论列表
 export const getarticledetail = (id) => {
   return axios({
     url: `/post/${id}`
   })
 }
 
+// 点赞
 export const postlike = (id) => {
   return axios({
     url: `/post_like/${id}`
   })
 }
 
+// 收藏
 export const starArticle = (id) => {
   return axios({
     url: `/post_star/${id}`

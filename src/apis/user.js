@@ -18,6 +18,7 @@ export const getUserById = (id) => {
   })
 }
 
+// 修改用户信息
 export const edituserinfo = (id, data) => {
   return axios({
     method: 'post',
@@ -26,6 +27,7 @@ export const edituserinfo = (id, data) => {
   })
 }
 
+// 注册
 export const register = (data) => {
   return axios({
     method: 'post',

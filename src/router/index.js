@@ -75,6 +75,9 @@ router.beforeEach((to, from, next) => {
     } else {
       // 否则返回到登录页面
       next({ name: 'Login' })
+      alert('用户信息验证失败，请先登录！')
+      // console.log(this) //undefine
+      // this.$toast.fail('用户信息验证失败')
     }
   } else {
     next()

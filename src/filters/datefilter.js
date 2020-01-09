@@ -1,3 +1,4 @@
+// 时间过滤器
 export const datefilter = (time, spe) => {
   time = new Date(time)
   spe = spe || '/'

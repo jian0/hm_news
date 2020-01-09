@@ -29,6 +29,7 @@ export default {
     }
   },
   watch: {
+    // 监听obj对象，如果有变化则表示点击了回复按钮，显示评论框
     obj () {
       if (this.obj) {
         this.isFocus = true
@@ -66,6 +67,7 @@ export default {
       this.post.has_star = !this.post.has_star
       this.$toast.success(res.data.message)
     },
+    // 取消按钮事件
     handlereply () {
       this.$emit('cancle')
       this.isFocus = false
