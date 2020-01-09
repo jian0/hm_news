@@ -10,12 +10,12 @@
           <p>{{item.user.nickname}}</p>
           <span>2小时前</span>
         </div>
-        <span>回复</span>
+        <span @click="replycomment(item)">回复1</span>
       </div>
       <commentitem v-if="item.parent" :parent='item.parent'></commentitem>
       <div class="text">{{item.content}}</div>
     </div>
-    <hmfooter :post='footer' @refresh='refresh'></hmfooter>
+    <hmfooter :post='footer' @refresh='refresh' :obj='replyobj' @cancle='replyobj = null'></hmfooter>
   </div>
 </template>
 
@@ -29,7 +29,8 @@ export default {
   data () {
     return {
       commList: [],
-      footer: []
+      footer: [],
+      replyobj: null
     }
   },
   components: {
@@ -56,6 +57,9 @@ export default {
       this.init()
       // 滚到顶部
       window.scrollTo(0, 0)
+    },
+    replycomment (item) {
+      this.replyobj = item
     }
   }
 }
