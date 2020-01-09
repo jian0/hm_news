@@ -8,6 +8,7 @@ import Register from '@/views/register.vue'
 import Index from '@/views/index.vue'
 import Artiledetail from '@/views/artiledetail.vue'
 import Myfollow from '@/views/Myfollow.vue'
+import Mystar from '@/views/mystar.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ let router = new VueRouter({
       name: 'Myfollow',
       path: '/myfollow',
       component: Myfollow
+    },
+    {
+      name: 'Mystar',
+      path: '/mystar',
+      component: Mystar
     },
     {
       name: 'Edituser',
