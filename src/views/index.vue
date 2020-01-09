@@ -28,7 +28,7 @@
                   v-model="cate.isLoading"
                   success-text="刷新成功"
                   @refresh="onRefresh">
-                <hmarticleblock v-for="item in cate.postList" :key="item.id" :post='item'></hmarticleblock>
+                <hmarticleblock v-for="item in cate.postList" :key="item.id" :post='item' @click="$router.push({path: `/artiledetail/${item.id}`})"></hmarticleblock>
             </van-pull-refresh>
             </van-list>
         </van-tab>
@@ -126,7 +126,7 @@ export default {
         this.castList[this.active].finished = true
       }
       // console.log(id)
-      console.log(res)
+      // console.log(res)
       this.castList[this.active].postList.push(...res.data.data)
     }
   }

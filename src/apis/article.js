@@ -6,3 +6,15 @@ export const getarticlelist = (params) => {
     params
   })
 }
+
+export const getarticledetail = (id) => {
+  return axios({
+    url: `/post/${id}`
+  })
+}
+
+export const postlike = (id) => {
+  return axios({
+    url: `/post_like/${id}`
+  })
+}

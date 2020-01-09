@@ -6,6 +6,7 @@ import Usercenter from '@/views/usercenter.vue'
 import Edituser from '@/views/edituser.vue'
 import Register from '@/views/register.vue'
 import Index from '@/views/index.vue'
+import Artiledetail from '@/views/artiledetail.vue'
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,11 @@ let router = new VueRouter({
       name: 'Index',
       path: '/',
       component: Index
+    },
+    {
+      name: 'Artiledetail',
+      path: '/artiledetail/:id',
+      component: Artiledetail
     }
   ]
 })

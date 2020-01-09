@@ -37,7 +37,7 @@ export default {
   async mounted () {
     // console.log(this.$route.params) // 1
     let res = await getUserById(this.$route.params.id)
-    // console.log(res)
+    console.log(res)
     if (res.data.message === '获取成功') {
       this.userdata = res.data.data
       this.userdata.head_img = 'http://localhost:3000' + res.data.data.head_img
