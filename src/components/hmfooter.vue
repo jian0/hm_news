@@ -13,6 +13,7 @@
         <textarea  ref='commtext' rows="5" @blur='isFocus = false'></textarea>
         <div>
             <span>发送</span>
+            <span>取消</span>
         </div>
     </div>
   </div>

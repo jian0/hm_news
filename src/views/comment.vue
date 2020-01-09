@@ -15,30 +15,37 @@
       <commentitem v-if="item.parent" :parent='item.parent'></commentitem>
       <div class="text">{{item.content}}</div>
     </div>
+    <hmfooter :post='footer'></hmfooter>
   </div>
 </template>
 
 <script>
 import myheader from '@/components/hmheader.vue'
-import { getCommentList } from '@/apis/article.js'
+import { getCommentList, getarticledetail } from '@/apis/article.js'
 import commentitem from '@/components/commentitem.vue'
+import hmfooter from '@/components/hmfooter.vue'
+
 export default {
   data () {
     return {
-      commList: []
+      commList: [],
+      footer: []
     }
   },
   components: {
-    myheader, commentitem
+    myheader, commentitem, hmfooter
   },
   async mounted () {
     let res = await getCommentList(this.$route.params.id)
-    console.log(res)
+    // console.log(res)
     this.commList = res.data.data.length > 0 ? res.data.data : this.commList
     this.commList.map(value => {
       value.user.head_img = 'http://127.0.0.1:3000' + value.user.head_img
       return value
     })
+    let res1 = await getarticledetail(this.$route.params.id)
+    // console.log(res1)
+    this.footer = res1.data.data
   }
 }
 </script>
