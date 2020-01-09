@@ -7,6 +7,7 @@ import Edituser from '@/views/edituser.vue'
 import Register from '@/views/register.vue'
 import Index from '@/views/index.vue'
 import Artiledetail from '@/views/artiledetail.vue'
+import Myfollow from '@/views/Myfollow.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ let router = new VueRouter({
       name: 'Usercenter',
       path: '/usercenter/:id',
       component: Usercenter
+    },
+    {
+      name: 'Myfollow',
+      path: '/myfollow',
+      component: Myfollow
     },
     {
       name: 'Edituser',
