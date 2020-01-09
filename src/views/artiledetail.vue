@@ -41,13 +41,18 @@
       </div>
       <div class="more">更多跟帖</div>
     </div>
+    <hmfooter :post='article'></hmfooter>
   </div>
 </template>
 
 <script>
 import { getarticledetail, postlike } from '@/apis/article.js'
 import { followsuser, unfollowsuser } from '@/apis/user.js'
+import hmfooter from '@/components/hmfooter.vue'
 export default {
+  components: {
+    hmfooter
+  },
   data () {
     return {
       article: {
@@ -177,6 +182,7 @@ video {
 .keeps {
   border-top: 5px solid #ddd;
   padding: 0 15px;
+  margin-bottom: 60px;
   > h2 {
     line-height: 50px;
     text-align: center;

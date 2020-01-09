@@ -18,3 +18,9 @@ export const postlike = (id) => {
     url: `/post_like/${id}`
   })
 }
+
+export const starArticle = (id) => {
+  return axios({
+    url: `/post_star/${id}`
+  })
+}
