@@ -9,6 +9,7 @@ import Index from '@/views/index.vue'
 import Artiledetail from '@/views/artiledetail.vue'
 import Myfollow from '@/views/Myfollow.vue'
 import Mystar from '@/views/mystar.vue'
+import Postcomment from '@/views/comment.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ let router = new VueRouter({
       name: 'Mystar',
       path: '/mystar',
       component: Mystar
+    },
+    {
+      name: 'Postcomment',
+      path: '/postcomment/:id',
+      component: Postcomment
     },
     {
       name: 'Edituser',
