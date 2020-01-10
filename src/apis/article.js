@@ -8,7 +8,7 @@ export const getarticlelist = (params) => {
   })
 }
 
-// 获取评论列表
+// 获取文章详情
 export const getarticledetail = (id) => {
   return axios({
     url: `/post/${id}`
@@ -42,5 +42,13 @@ export const sendContent = (id, data) => {
     method: 'post',
     url: `/post_comment/${id}`,
     data
+  })
+}
+
+// 搜索文章
+export const searchpost = (params) => {
+  return axios({
+    url: `/post_search`,
+    params
   })
 }

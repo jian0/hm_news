@@ -11,6 +11,7 @@ import Myfollow from '@/views/Myfollow.vue'
 import Mystar from '@/views/mystar.vue'
 import Postcomment from '@/views/comment.vue'
 import Addnav from '@/views/addnav.vue'
+import Search from '@/views/search.vue'
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,11 @@ let router = new VueRouter({
       name: 'Addnav',
       path: '/addnav',
       component: Addnav
+    },
+    {
+      name: 'Search',
+      path: '/search',
+      component: Search
     },
     {
       name: 'Myfollow',
