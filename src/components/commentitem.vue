@@ -1,9 +1,10 @@
 <template>
   <div class="comment">
-      <commentitem v-if="parent.parent" :parent='parent.parent'></commentitem>
+      <commentitem v-if="parent.parent" :parent='parent.parent' @replything='replycomment'></commentitem>
       <div class="top">
           <span>{{parent.user.nickname}}</span>
-          <span>回复</span>
+          <!-- 子传父 -->
+          <span @click="replycomment(parent)">回复</span>
       </div>
       <div class="bottom">
           <span>{{parent.content}}</span>
@@ -14,7 +15,13 @@
 <script>
 export default {
   name: 'commentitem',
-  props: ['parent']
+  props: ['parent'],
+  methods: {
+    replycomment (parent) {
+      console.log(parent)
+      this.$emit('replything', parent)
+    }
+  }
 }
 </script>
 

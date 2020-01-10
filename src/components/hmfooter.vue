@@ -39,19 +39,25 @@ export default {
   methods: {
     // 发表评论
     async sendcontent () {
-      console.log(this.post.id)
-      let res = await sendContent(this.post.id, { content: this.$refs.commtext.value })
-      console.log(res)
-      if (res.data.message === '评论发布成功') {
-      // 发表成功后关闭输入框
-        this.isFocus = false
-        // 弹窗
-        this.$toast.success(res.data.message)
-        // 清空文本域的内容
-        this.$refs.commtext.value = ''
-        // 红色评论数+1
-        this.post.comment_length++
-        this.$emit('refresh')
+      // console.log(this.post.id)
+      // console.log(this.obj)
+      if (this.$refs.commtext.value.trim().length !== 0) {
+        let res = await sendContent(this.post.id, { content: this.$refs.commtext.value,
+          parent_id: this.obj ? this.obj.id : null })
+        // console.log(res)
+        if (res.data.message === '评论发布成功') {
+          // 发表成功后关闭输入框
+          this.isFocus = false
+          // 弹窗
+          this.$toast.success(res.data.message)
+          // 清空文本域的内容
+          this.$refs.commtext.value = ''
+          // 红色评论数+1
+          this.post.comment_length++
+          this.$emit('refresh')
+        }
+      } else {
+        this.$toast.fail('评论内容不能为空')
       }
     },
     //   获取焦点时触发

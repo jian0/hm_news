@@ -50,7 +50,7 @@ export default {
   methods: {
     exit () {
       // console.log(123)
-      this.$router.push({ name: 'Login' })
+      this.$router.push({ name: 'Index' })
       localStorage.removeItem('hm_news_token')
     }
   }

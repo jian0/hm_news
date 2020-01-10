@@ -12,7 +12,7 @@
         </div>
         <span @click="replycomment(item)">回复1</span>
       </div>
-      <commentitem v-if="item.parent" :parent='item.parent'></commentitem>
+      <commentitem v-if="item.parent" :parent='item.parent' @replything='replycomment'></commentitem>
       <div class="text">{{item.content}}</div>
     </div>
     <hmfooter :post='footer' @refresh='refresh' :obj='replyobj' @cancle='replyobj = null'></hmfooter>
