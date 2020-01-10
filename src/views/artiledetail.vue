@@ -68,7 +68,7 @@ export default {
     // 根据id获取文章的详情，实现文章详情的动态渲染
     // console.log(this.$route.params.id)
     let res = await getarticledetail(this.$route.params.id)
-    console.log(res)
+    // console.log(res)
     this.article = res.data.data
   },
   methods: {

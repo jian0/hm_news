@@ -10,6 +10,7 @@ import Artiledetail from '@/views/artiledetail.vue'
 import Myfollow from '@/views/Myfollow.vue'
 import Mystar from '@/views/mystar.vue'
 import Postcomment from '@/views/comment.vue'
+import Addnav from '@/views/addnav.vue'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,11 @@ let router = new VueRouter({
       name: 'Usercenter',
       path: '/usercenter/:id',
       component: Usercenter
+    },
+    {
+      name: 'Addnav',
+      path: '/addnav',
+      component: Addnav
     },
     {
       name: 'Myfollow',

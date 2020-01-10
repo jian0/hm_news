@@ -11,6 +11,7 @@
       <div class="right" @click="$router.push({path:`/usercenter/${id}`})">
           <van-icon name="contact" />
       </div>
+      <span class="add" @click="$router.push({name: 'Addnav'})">+</span>
   </div>
     <div class="nav">
       <van-tabs v-model="active" sticky swipeable>
@@ -64,11 +65,21 @@ export default {
   async mounted () {
     //   先拿到用户id
     this.id = JSON.parse(localStorage.getItem('userinfo') || '{}').id
+    if (localStorage.getItem('add_nav_data')) {
+      let data = JSON.parse(localStorage.getItem('add_nav_data'))
+      if (localStorage.getItem('hm_news_token')) {
+        data.unshift({ id: 0, name: '关注', is_top: 1 }, { id: 999, name: '头条', is_top: 1 })
+      } else {
+        data.unshift({ id: 999, name: '头条', is_top: 1 })
+      }
+      this.castList = data
+    } else {
     // 获取所有栏目
-    let res = await getcatelist()
-    // console.log(res)
-    // 把数据存储在数组里面
-    this.castList = res.data.data
+      let res = await getcatelist()
+      console.log(res)
+      // 把数据存储在数组里面
+      this.castList = res.data.data
+    }
 
     // 进行数据改造
     this.castList = this.castList.map(arr => {
@@ -161,5 +172,8 @@ export default {
         font-size: 28px;
         padding: 0 20px
     }
+}
+.add {
+  font-size: 35px
 }
 </style>

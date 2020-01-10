@@ -18,7 +18,7 @@ export default {
   props: ['parent'],
   methods: {
     replycomment (parent) {
-      console.log(parent)
+    //   console.log(parent)
       this.$emit('replything', parent)
     }
   }

@@ -16,6 +16,7 @@ Vue.use(Toast)
   .use(PullRefresh)
   .use(SwipeCell)
   .use(Button)
+  // .use(Search)
 Vue.config.productionTip = false
 
 new Vue({
